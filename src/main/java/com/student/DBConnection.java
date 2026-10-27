@@ -9,8 +9,7 @@ public final class DBConnection {
     private DBConnection() {
     }
 
-    public static Connection getConnection()
-            throws SQLException, ClassNotFoundException {
+    public static Connection getConnection() throws SQLException {
 
         String url = System.getenv("DB_URL");
         String user = System.getenv("DB_USER");
@@ -28,10 +27,14 @@ public final class DBConnection {
             throw new SQLException("DB_PASSWORD is not configured.");
         }
 
-        // Explicitly load the MySQL JDBC driver
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException(
+                "MySQL JDBC driver not found in the application.", e
+            );
+        }
 
         return DriverManager.getConnection(url, user, password);
     }
 }
-
