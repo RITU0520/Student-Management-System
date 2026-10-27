@@ -1,4 +1,3 @@
-```java
 package com.student;
 
 import java.sql.Connection;
@@ -35,4 +34,4 @@ public final class DBConnection {
         return DriverManager.getConnection(url, user, password);
     }
 }
-```
+
