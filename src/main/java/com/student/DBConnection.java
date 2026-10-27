@@ -1,3 +1,4 @@
+```java
 package com.student;
 
 import java.sql.Connection;
@@ -9,7 +10,8 @@ public final class DBConnection {
     private DBConnection() {
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection()
+            throws SQLException, ClassNotFoundException {
 
         String url = System.getenv("DB_URL");
         String user = System.getenv("DB_USER");
@@ -27,6 +29,10 @@ public final class DBConnection {
             throw new SQLException("DB_PASSWORD is not configured.");
         }
 
+        // Explicitly load the MySQL JDBC driver
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
         return DriverManager.getConnection(url, user, password);
     }
 }
+```
